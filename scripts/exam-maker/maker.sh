@@ -1,7 +1,6 @@
 #/bin/bash
 
 TA_FILE="ta.csv"
-TEMP_FILE="l7520.tmp"
 
 echo "\documentclass[12pt]{article}"
 echo "\usepackage{amssymb}"
