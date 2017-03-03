@@ -6,7 +6,7 @@ ABS_FILE="absent-mid-sem.csv"
 
 
 echo "\\documentclass{article}"
-echo "\\usepackage[margin=1in]{geometry}"
+echo "\\usepackage[margin=0.5in]{geometry}"
 echo "\\usepackage{arydshln}"
 echo "\\usepackage{graphicx}"
 echo "\\usepackage{ulem}"
@@ -24,12 +24,15 @@ do
   group=`echo $line | awk -F "," '{print $2}' | sed 's/[A-Za-z]//g'`
 
 
-echo "\\textbf{\\large $day -- $group -- $jta}"
+echo "\\textbf{\\large $day -- Group \\#$group -- $jta}"
+echo ""
+echo "\\vspace{\\baselineskip}"
 
-echo "\\begin{tabular}{|l|p{2cm}|l|l|l:l|l|l:l:l:l|l|}"
+echo "\\begin{tabular}{|c|p{2cm}|c|c|c|c|c|c|}"
 echo "\\hline"
-echo "Roll No. & Name &  Q. 1 & Q. 2 & Q. 3a & Q. 3b & Q. 4 & Q. 5a & Q. 5b & Q. 5c & Q. 5d & Total\\begin{tabular}{l} \\\\ \\\\ \\end{tabular}\\\\"
-
+echo "\textbf{Roll No.} & \textbf{Name} &  \textbf{Q. 1} & \textbf{Q. 2} & \textbf{Q. 3} & \textbf{Q. 4} & \textbf{Q. 5} & \textbf{Total}\\begin{tabular}{l} \\\\ \\\\ \\end{tabular}\\\\"
+echo "& &  \textit{(12 Marks)} & \textit{(10 Marks)} & \textit{(14 Marks)} & \textit{(10 Marks)} & \textit{(14 Marks)} & \textit{(60 Marks)}\\begin{tabular}{l} \\\\ \\\\ \\end{tabular}\\\\"
+echo "\\hline"
 while IFS= read line_stud
 do
   rollno=`echo $line_stud | awk -F "," '{print $1}'`
@@ -42,17 +45,17 @@ do
     absent=`grep -c -x "$rollno" $ABS_FILE`
     if [ $absent -eq "0" ]; then
       echo "\\hline"
-      echo "$rollno & $name & & &  & & &  &  & &  & \\begin{tabular}{l} \\\\ \\\\ \\end{tabular}\\\\"
+      echo "$rollno & $name & & &  & & & \\begin{tabular}{l} \\\\ \\\\ \\end{tabular}\\\\"
     else
       echo "\\hline"
-      echo "\\sout{$rollno} & \\sout{$name} & & &  & & &  &  & &  & \\begin{tabular}{l} \\\\ \\\\ \\end{tabular}\\\\"
+      echo "\\sout{$rollno} & \\sout{$name} & & &  & & & \\begin{tabular}{l} \\\\ \\\\ \\end{tabular}\\\\"
     fi
   fi
 done <"$STU_FILE"
 
 echo "\\hline"
 echo "\\hline"
-echo "& \\rotatebox{60}{Checked by TA Name}  &  & &  & & &  &  & &  & \\\\ "
+echo "& \\rotatebox{60}{Checked By (Name)}  &  & &  & & &  \\\\ "
 echo "\\end{tabular}"
 echo "\\newpage"
 
